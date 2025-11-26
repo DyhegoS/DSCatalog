@@ -18,11 +18,13 @@ public class ProductRepositoryTests {
 	private ProductRepository repository;
 	
 	private long existingId;
+    private long nonExistingId;
 	private long countTotalProducts;
 	
 	@BeforeEach
 	void setUp() throws Exception{
 		existingId = 1L;
+        nonExistingId = 26L;
 		countTotalProducts = 25L;
 	}
 	
@@ -49,10 +51,21 @@ public class ProductRepositoryTests {
 	//não funciona no springboot 3, apenas no 2
 	/*@Test
 	public void deleteShouldThrowEmptyResultDataAccessExceptionWhenIdDoesNotExist() {
-
 		Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
 			repository.deleteById(nonExistingId);			
 		});
 	}*/
+
+    @Test
+    public void findByIdShouldReturnProductWhenIdExists(){
+        Optional<Product> result = repository.findById(existingId);
+        Assertions.assertTrue(result.isPresent());
+    }
+
+    @Test
+    public void findByIdShouldReturnProductEmptyWhenIdDoesNotExists(){
+        Optional<Product> result = repository.findById(nonExistingId);
+        Assertions.assertTrue(result.isEmpty());
+    }
 
 }
