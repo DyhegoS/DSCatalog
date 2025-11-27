@@ -67,5 +67,4 @@ public class ProductRepositoryTests {
         Optional<Product> result = repository.findById(nonExistingId);
         Assertions.assertTrue(result.isEmpty());
     }
-
 }
