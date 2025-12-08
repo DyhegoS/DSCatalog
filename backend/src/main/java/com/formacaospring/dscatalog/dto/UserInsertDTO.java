@@ -1,5 +1,8 @@
 package com.formacaospring.dscatalog.dto;
 
+import com.formacaospring.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
 	
 	private String password;
