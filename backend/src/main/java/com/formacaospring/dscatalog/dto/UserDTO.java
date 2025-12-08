@@ -5,10 +5,22 @@ import java.util.Set;
 
 import com.formacaospring.dscatalog.entities.User;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserDTO {
 	private Long id;
+	
+	@Size(min = 5, max = 60, message = "Campo deve ter no minimo 5 caracteres e no máximo 60")
+	@NotBlank(message = "Campo não pode ficar em branco")
 	private String firstName;
+	
+	@Size(min = 5, max = 60, message = "Campo deve ter no minimo 5 caracteres e no máximo 60")
+	@NotBlank(message = "Campo não pode ficar em branco")
 	private String lastName;
+	
+	@Email(message = "Informar um e-mail válido!")
 	private String email;
 	
 	Set<RoleDTO> roles = new HashSet<>();

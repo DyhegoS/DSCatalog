@@ -8,13 +8,27 @@ import java.util.Set;
 import com.formacaospring.dscatalog.entities.Category;
 import com.formacaospring.dscatalog.entities.Product;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class ProductDTO {
 	
 	private Long id;
+	
+	@Size(min = 5, max = 60, message = "Campo deve ter no minimo 5 caracteres e no máximo 60")
+	@NotBlank(message = "Campo não pode ficar em branco")
 	private String name;
+	
+	@NotBlank(message = "Campo não pode ficar em branco")
 	private String description;
+	
+	@Positive(message = "O preço deve ser um valor positivo")
 	private Double price;
 	private String imgUrl;
+	
+	@PastOrPresent(message = "A data não pode ser futura")
 	private Instant date;
 	
 	private List<CategoryDTO> categories = new ArrayList<>();
