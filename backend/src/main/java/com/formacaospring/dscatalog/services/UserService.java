@@ -32,9 +32,8 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class UserService implements UserDetailsService{
 	
-	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-
+	
 	@Autowired
 	private UserRepository repository;
 	
