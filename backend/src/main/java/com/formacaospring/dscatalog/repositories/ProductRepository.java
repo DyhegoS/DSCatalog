@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			SELECT DISTINCT tb_product.id, tb_product.name
 			FROM tb_product
 			INNER JOIN tb_product_category ON tb_product.id = tb_product_category.product_id
-			WHERE tb_product_category.category_id IN :categoryIds
+			WHERE (:categoryId IS NULL OR tb_product_category.category_id IN :categoryId)
 			AND LOWER(tb_product.name) LIKE LOWER(CONCAT('%', :name, '%'))
 			ORDER BY tb_product.name
 			""",
@@ -27,9 +27,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			SELECT DISTINCT tb_product.id, tb_product.name
 			FROM tb_product
 			INNER JOIN tb_product_category ON tb_product_category.product_id = tb_product.id
-			WHERE (:categoryIds IS NULL OR tb_product_category.category_id IN (:categoryIds))
+			WHERE (:categoryId IS NULL OR tb_product_category.category_id IN (:categoryId))
 			AND (LOWER(tb_product.name) LIKE LOWER(CONCAT('%',:name,'%')))
 			) AS tb_result
 			""")
-	Page<ProductProjection>searchProducts(List<Long> categoryIds, String name, Pageable pageable);
+	Page<ProductProjection>searchProducts(List<Long> categoryId, String name, Pageable pageable);
 }

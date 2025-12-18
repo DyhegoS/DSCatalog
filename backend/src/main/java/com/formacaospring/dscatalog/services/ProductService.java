@@ -1,11 +1,9 @@
 package com.formacaospring.dscatalog.services;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-import com.formacaospring.dscatalog.dto.CategoryDTO;
-import com.formacaospring.dscatalog.entities.Category;
-import com.formacaospring.dscatalog.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -14,9 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.formacaospring.dscatalog.dto.CategoryDTO;
 import com.formacaospring.dscatalog.dto.ProductDTO;
+import com.formacaospring.dscatalog.entities.Category;
 import com.formacaospring.dscatalog.entities.Product;
 import com.formacaospring.dscatalog.projection.ProductProjection;
+import com.formacaospring.dscatalog.repositories.CategoryRepository;
 import com.formacaospring.dscatalog.repositories.ProductRepository;
 import com.formacaospring.dscatalog.services.exceptions.DatabaseException;
 import com.formacaospring.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -94,7 +95,13 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-	public Page<ProductProjection> testQuery(Pageable pageable) {
-		return repository.searchProducts(Arrays.asList(1L, 3L), "", pageable);
+	public Page<ProductProjection> findAllPaged(String name, String categoryId, Pageable pageable) {
+    	
+    	List<Long> categoryIds = Arrays.asList();
+    	if(!"0".equals(categoryId)) {
+    		categoryIds = Arrays.asList(categoryId.split(",")).stream().map(Long::parseLong).toList();
+    	}
+    			 			
+		return repository.searchProducts(categoryIds, name, pageable);
 	}
 }
