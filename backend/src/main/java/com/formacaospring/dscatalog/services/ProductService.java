@@ -1,5 +1,6 @@
 package com.formacaospring.dscatalog.services;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.formacaospring.dscatalog.dto.CategoryDTO;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.formacaospring.dscatalog.dto.ProductDTO;
 import com.formacaospring.dscatalog.entities.Product;
+import com.formacaospring.dscatalog.projection.ProductProjection;
 import com.formacaospring.dscatalog.repositories.ProductRepository;
 import com.formacaospring.dscatalog.services.exceptions.DatabaseException;
 import com.formacaospring.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -90,4 +92,9 @@ public class ProductService {
             entity.getCategories().add(category);
         }
     }
+
+    @Transactional(readOnly = true)
+	public Page<ProductProjection> testQuery(Pageable pageable) {
+		return repository.searchProducts(Arrays.asList(1L, 3L), "", pageable);
+	}
 }
