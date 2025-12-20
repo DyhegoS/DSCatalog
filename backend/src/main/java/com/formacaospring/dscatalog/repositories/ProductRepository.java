@@ -15,12 +15,13 @@ import com.formacaospring.dscatalog.projection.ProductProjection;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	@Query(nativeQuery = true, value = """
+			SELECT * FROM (
 			SELECT DISTINCT tb_product.id, tb_product.name
 			FROM tb_product
 			INNER JOIN tb_product_category ON tb_product.id = tb_product_category.product_id
 			WHERE (:categoryId IS NULL OR tb_product_category.category_id IN :categoryId)
 			AND LOWER(tb_product.name) LIKE LOWER(CONCAT('%', :name, '%'))
-			ORDER BY tb_product.name
+			) AS tb_result
 			""",
 			countQuery = """
 			SELECT COUNT(*) FROM (
@@ -32,4 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			) AS tb_result
 			""")
 	Page<ProductProjection>searchProducts(List<Long> categoryId, String name, Pageable pageable);
+
+    @Query("SELECT obj FROM Product obj JOIN FETCH obj.categories WHERE obj.id IN :productIds")
+    List<Product> searchProductWithCategories(List<Long> productIds);
 }
