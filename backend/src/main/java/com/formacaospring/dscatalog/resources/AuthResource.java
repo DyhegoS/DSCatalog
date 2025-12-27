@@ -1,9 +1,6 @@
 package com.formacaospring.dscatalog.resources;
 
-import com.formacaospring.dscatalog.dto.EmailDTO;
-import com.formacaospring.dscatalog.dto.UserDTO;
-import com.formacaospring.dscatalog.dto.UserInsertDTO;
-import com.formacaospring.dscatalog.dto.UserUpdateDTO;
+import com.formacaospring.dscatalog.dto.*;
 import com.formacaospring.dscatalog.services.AuthService;
 import com.formacaospring.dscatalog.services.UserService;
 import jakarta.validation.Valid;
@@ -29,4 +26,10 @@ public class AuthResource {
 		authService.createRecoverToken(body);
         return ResponseEntity.noContent().build();
 	}
+
+    @PutMapping (value = "/new-password")
+    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDTO body){
+        authService.saveNewPassword(body);
+        return ResponseEntity.noContent().build();
+    }
 }

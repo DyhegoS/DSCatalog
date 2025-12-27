@@ -38,6 +38,13 @@ public class UserResource {
         return ResponseEntity.ok().body(list);
 	}
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
+    @GetMapping(value = "/profile")
+    public ResponseEntity<UserDTO> findProfile(){
+        UserDTO dto = service.findProfile();
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
