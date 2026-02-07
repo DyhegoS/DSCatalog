@@ -38,6 +38,7 @@ public class ProductResourceTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@SuppressWarnings("removal")
 	@MockBean
 	private ProductService service;
 	

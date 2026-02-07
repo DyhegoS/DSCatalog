@@ -1,7 +1,9 @@
 package com.formacaospring.dscatalog.services.exceptions;
 
 public class EmailException extends RuntimeException {
-    public EmailException(String msg) {
+	private static final long serialVersionUID = 1L;
+
+	public EmailException(String msg) {
         super(msg);
     }
 }

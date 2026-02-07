@@ -18,5 +18,15 @@
     "name": "cors.origins",
     "type": "java.lang.String",
     "description": "A description for 'cors.origins'"
+  },
+  {
+    "name": "aws.secret_access_key",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.secret_access_key'"
+  },
+  {
+    "name": "aws.access_key_id",
+    "type": "java.lang.String",
+    "description": "A description for 'aws.access_key_id'"
   }
 ]}

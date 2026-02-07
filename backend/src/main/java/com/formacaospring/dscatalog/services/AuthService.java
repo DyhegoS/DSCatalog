@@ -1,13 +1,9 @@
 package com.formacaospring.dscatalog.services;
 
-import com.formacaospring.dscatalog.dto.EmailDTO;
-import com.formacaospring.dscatalog.dto.NewPasswordDTO;
-import com.formacaospring.dscatalog.entities.PasswordRecover;
-import com.formacaospring.dscatalog.entities.User;
-import com.formacaospring.dscatalog.repositories.PasswordRecoverRepository;
-import com.formacaospring.dscatalog.repositories.UserRepository;
-import com.formacaospring.dscatalog.services.exceptions.ResourceNotFoundException;
-import jakarta.validation.Valid;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -18,9 +14,13 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
+import com.formacaospring.dscatalog.dto.EmailDTO;
+import com.formacaospring.dscatalog.dto.NewPasswordDTO;
+import com.formacaospring.dscatalog.entities.PasswordRecover;
+import com.formacaospring.dscatalog.entities.User;
+import com.formacaospring.dscatalog.repositories.PasswordRecoverRepository;
+import com.formacaospring.dscatalog.repositories.UserRepository;
+import com.formacaospring.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class AuthService {
