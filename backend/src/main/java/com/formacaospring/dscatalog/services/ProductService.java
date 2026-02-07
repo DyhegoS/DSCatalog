@@ -1,10 +1,10 @@
 package com.formacaospring.dscatalog.services;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.formacaospring.dscatalog.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -13,9 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.formacaospring.dscatalog.dto.CategoryDTO;
 import com.formacaospring.dscatalog.dto.ProductDTO;
+import com.formacaospring.dscatalog.dto.UriDTO;
 import com.formacaospring.dscatalog.entities.Category;
 import com.formacaospring.dscatalog.entities.Product;
 import com.formacaospring.dscatalog.projection.ProductProjection;
@@ -23,6 +25,7 @@ import com.formacaospring.dscatalog.repositories.CategoryRepository;
 import com.formacaospring.dscatalog.repositories.ProductRepository;
 import com.formacaospring.dscatalog.services.exceptions.DatabaseException;
 import com.formacaospring.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.formacaospring.dscatalog.util.Utils;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -34,6 +37,9 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    
+    @Autowired
+    private S3Service s3Service;
 
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(Pageable pageable) {
@@ -114,4 +120,9 @@ public class ProductService {
             entity.getCategories().add(category);
         }
     }
+
+	public UriDTO uploadFile(MultipartFile file) {
+		URL url = s3Service.uploadFile(file);
+		return new UriDTO(url.toString());
+	}
 }
